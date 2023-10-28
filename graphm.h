@@ -1,6 +1,8 @@
 #ifndef GRAPHM_H
 #define GRAPHM_H
 #include "nodedata.h"
+#include <iostream>
+#include <fstream>
 
 const int MAXNODES = 100;
 
@@ -8,7 +10,18 @@ const int MAXNODES = 100;
 class GraphM{
 
 public:
-
+//constructors and destructor
+GraphM();
+GraphM(const GraphM&);
+~GraphM();
+//functions
+bool buildGraph();
+bool insertEdge(int, int, int);
+bool removeEdge(int, int);
+bool findShorestPath();
+void displayAll() const;
+void display(int, int);
+void findShortestPath();
 private:
 
     struct TableType {
