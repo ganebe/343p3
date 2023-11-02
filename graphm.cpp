@@ -15,6 +15,7 @@ GraphM::GraphM()
     }
 }
 
-
-
-
+bool GraphM::insertEdge(int, int, int)
+{
+    return false;
+}
