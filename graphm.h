@@ -12,16 +12,13 @@ class GraphM{
 public:
 //constructors and destructor
 GraphM();
-GraphM(const GraphM&);
-~GraphM();
 //functions
-bool buildGraph();
+void buildGraph(ifstream& file);
 bool insertEdge(int, int, int);
 bool removeEdge(int, int);
-bool findShorestPath();
+void findShorestPath();
 void displayAll() const;
 void display(int, int);
-void findShortestPath();
 private:
 
     struct TableType {
@@ -34,6 +31,8 @@ private:
     int C[MAXNODES][MAXNODES]; // Cost array, the adjacency matrix
     int size; // number of nodes in the graph
     TableType T[MAXNODES][MAXNODES]; // stores visited, distance, path
+    void printPathHelper(int, int);
+    void printValueHelper(int, int);
 };
 
 #endif
