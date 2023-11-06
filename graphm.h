@@ -4,8 +4,8 @@
 #include <iostream>
 #include <fstream>
 
-//const int MAXNODES = 101;
 
+ 
 
 class GraphM{
 
@@ -26,7 +26,7 @@ private:
         int dist; // shortest distance from source known so far
         int path; // previous node in path of min dist
         };
-
+    static const int MAXNODES = 101;
     NodeData data[MAXNODES]; // data for graph nodes
     int C[MAXNODES][MAXNODES]; // Cost array, the adjacency matrix
     int size; // number of nodes in the graph
