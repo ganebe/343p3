@@ -31,8 +31,8 @@ private:
     int C[MAXNODES][MAXNODES]; // Cost array, the adjacency matrix
     int size; // number of nodes in the graph
     TableType T[MAXNODES][MAXNODES]; // stores visited, distance, path
-    void printPath(int, int);
-    void printValue(int, int);
+    void printPathHelper(int, int);
+    void printValueHelper(int, int);
 };
 
 #endif

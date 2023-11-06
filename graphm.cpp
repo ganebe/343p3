@@ -142,7 +142,7 @@ void GraphM::display(int fromEdge, int toEdge)
     
 }
 
-void GraphM::printPath(int fromEdge, int toEdge)
+void GraphM::printPathHelper(int fromEdge, int toEdge)
 {
     if (T[fromEdge][toEdge].dist == INT_MAX)
     {
@@ -156,11 +156,11 @@ void GraphM::printPath(int fromEdge, int toEdge)
     }
 
     int path = toEdge;
-    printPath(fromEdge, toEdge = T[fromEdge][toEdge].path);
+    printPathHelper(fromEdge, toEdge = T[fromEdge][toEdge].path);
     cout << path << " ";
 }
 
-void GraphM::printValue(int fromEdge, int toEdge)
+void GraphM::printValueHelper(int fromEdge, int toEdge)
 {
     if (T[fromEdge][toEdge].dist == INT_MAX)
     {
@@ -173,6 +173,6 @@ void GraphM::printValue(int fromEdge, int toEdge)
         return;
     }
     int value = toEdge;
-    printValue(fromEdge, toEdge = T[fromEdge][toEdge].path);
+    printValueHelper(fromEdge, toEdge = T[fromEdge][toEdge].path);
     cout << data[value];
 }
