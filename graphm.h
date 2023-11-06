@@ -1,6 +1,7 @@
 #ifndef GRAPHM_H
 #define GRAPHM_H
 #include "nodedata.h"
+#include <limits>
 #include <iostream>
 #include <fstream>
 
@@ -13,7 +14,7 @@ GraphM();
 void buildGraph(ifstream& file);
 bool insertEdge(int, int, int);
 bool removeEdge(int, int);
-void findShorestPath();
+void findShortestPath();
 void displayAll();
 void display(int, int);
 private:
