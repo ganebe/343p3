@@ -14,7 +14,7 @@ void buildGraph(ifstream& file);
 bool insertEdge(int, int, int);
 bool removeEdge(int, int);
 void findShorestPath();
-void displayAll() const;
+void displayAll();
 void display(int, int);
 private:
 

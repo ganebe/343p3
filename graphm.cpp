@@ -18,8 +18,8 @@ GraphM::GraphM()
 void GraphM::buildGraph(ifstream &file)
 {
    file >> size;
-   string name = " ";
-   getline(file, name);
+   char* name = new char[50];
+   file.getline(name, 50);
 
    for (int i = 1; i <= size; i++)
    {
@@ -132,9 +132,23 @@ void GraphM::findShorestPath()
     }
 }
 
-void GraphM::displayAll() const
+void GraphM::displayAll()
 {
-
+    cout << "Description            From node     To node     Dijkstra's Path" << endl;
+    for(int i = 1 ; i <= size; i++){
+        cout << data[i] << endl;
+        for(int j = 1; j <= size; j++){
+            cout << "                                      ";
+            cout << i << "       " << j << "      ";
+            if(T[i][j].dist == INT_MAX){
+                cout << "---" << endl;
+            }else{
+                printValueHelper(i, j);
+                printPathHelper(i, j);
+                cout << endl;
+            }
+        }
+    }
 }
 
 void GraphM::display(int fromEdge, int toEdge)
