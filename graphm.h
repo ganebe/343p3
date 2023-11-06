@@ -4,7 +4,7 @@
 #include <iostream>
 #include <fstream>
 
-const int MAXNODES = 101;
+//const int MAXNODES = 101;
 
 
 class GraphM{
