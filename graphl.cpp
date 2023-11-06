@@ -12,7 +12,7 @@ GraphL::GraphL(){
 
 GraphL::~GraphL(){
     makeEmpty();
-    delete arr_;
+    delete [] arr_;
     arr_ = NULL;
 }
 
@@ -20,20 +20,34 @@ void GraphL::buildGraph(ifstream & in_file)
 {
     int pervious_number_of_edge = number_of_edge_node_;
 
+
+    number_of_edge_node_ = 0;
+
+    
     in_file >> number_of_edge_node_;
 
     if(number_of_edge_node_ <= 0){
+        number_of_edge_node_ = pervious_number_of_edge;
+        makeEmpty();
         return;
     }
 
     if(number_of_edge_node_ > 100){
+        number_of_edge_node_ = pervious_number_of_edge;
         cout << "The maximum edge node is 100" << endl;
+        makeEmpty();
         return;
 
     }
 
+    //empty file
+    //file not opened
+
     if(pervious_number_of_edge > 0 ){
+        int temp = number_of_edge_node_;
+        number_of_edge_node_ = pervious_number_of_edge;
         makeEmpty();
+        number_of_edge_node_ = temp;
     }
     
     char* node_name = new char[50];
@@ -46,30 +60,22 @@ void GraphL::buildGraph(ifstream & in_file)
 
         arr_[i].data = new NodeData(node_name);
     }
-    delete node_name;
+    delete [] node_name;
     int first, second;
     bool all_zero = false;
     while(!all_zero){
 
         in_file >> first >> second;
 
-        if(first == 0 && second == 0){
+        if(first == 0){
             all_zero = true;
             break;
         }
 
-        if(first <= 0 || second <= 0){
-            cout << "can't have node number that smaller than 0" << endl;
-            break;
-        }else if(first > number_of_edge_node_ || second > number_of_edge_node_) {
-            cout << "can't have node number that greater that the total nodes" << endl;
-            break;
-        }else{
-            EdgeNode * temp = arr_[first].edgeHead;
-            arr_[first].edgeHead = new EdgeNode;
-            arr_[first].edgeHead->nextEdge = temp;
-            arr_[first].edgeHead->adjGraphNode = second;
-        }
+        EdgeNode * temp = arr_[first].edgeHead;
+        arr_[first].edgeHead = new EdgeNode;
+        arr_[first].edgeHead->nextEdge = temp;
+        arr_[first].edgeHead->adjGraphNode = second;
     }
 
 
