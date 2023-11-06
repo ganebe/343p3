@@ -139,7 +139,22 @@ void GraphM::displayAll() const
 
 void GraphM::display(int fromEdge, int toEdge)
 {
-    
+    cout << "       " << fromEdge << "         " << toEdge;
+
+    if (fromEdge < 1 || fromEdge > size || toEdge < 1 || toEdge > size)
+    {
+        cout << "           " << "-----" << endl;
+    }
+    if (T[fromEdge][toEdge].dist != INT_MAX)
+    {
+        cout << "           " << T[fromEdge][toEdge].dist << "               ";
+        printPathHelper(fromEdge,toEdge);
+        printValueHelper(fromEdge,toEdge);
+    }
+    else
+    {
+        cout << "           " << "-----" << endl;
+    }
 }
 
 void GraphM::printPathHelper(int fromEdge, int toEdge)
