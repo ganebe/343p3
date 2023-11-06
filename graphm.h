@@ -4,9 +4,6 @@
 #include <iostream>
 #include <fstream>
 
-
- 
-
 class GraphM{
 
 public:

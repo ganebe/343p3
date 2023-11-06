@@ -7,7 +7,7 @@
 #include <string>
 using namespace std;
 
-const int MAXNODES = 101;
+
 
 class GraphL{
 
@@ -20,7 +20,7 @@ void displayGraph();
 void depthFirstSearch();
 
 private:
-
+static const int MAXNODES = 101;
 struct EdgeNode {
     int adjGraphNode; // subscript of the adjacent graph node
     EdgeNode* nextEdge;
