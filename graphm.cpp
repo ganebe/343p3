@@ -1,16 +1,31 @@
 #include "graphm.h"
 
-GraphM::GraphM()
-{
-    size = 0;
-    for (int i = 1; i < MAXNODES; i++)
-    {
-        for (int j = 1; j < MAXNODES; j++)
-        {
-            C[i][j] = INT_MAX;
-            T[i][j].visited = false;
-            T[i][j].dist = INT_MAX;
-            T[i][j].path = 0;
+// ------------------------------------------------GraphM.cpp -------------------------------------------------------
+// CSS 343 B Au 23
+// Created on 11/6/2023
+// Last Modified on 11/6/2023
+// Created by Vince Nguyen and Lok Yin Wong 
+// --------------------------------------------------------------------------------------------------------------------
+// This file has the implementation of the different methods and functions from the header file. The methods and functions
+// that have helper functions will be above each other to know that they are together. This class assumes the input file is 
+// correctly formatted with valid data. When the input file is correctly formatted with valid data, this class
+// should be able to build, display, and find the shortest path between any two nodes.
+// --------------------------------------------------------------------------------------------------------------------
+// The class should be able to find the shoretest path between any two nodes and display the total wiehgt and the path correctly.
+// --------------------------------------------------------------------------------------------------------------------
+
+//------------------------- GraphM ---------------------------------
+// Default constructor to initialize variables and set the adjacency matrix
+//-------------------------------------------------------------------------
+
+GraphM::GraphM(){
+    size = 0;  // Initialize the number of nodes in the graph to zero
+    for (int i = 1; i < MAXNODES; i++){
+        for (int j = 1; j < MAXNODES; j++){
+            C[i][j] = INT_MAX; // Set the cost array elements to INT_MAX
+            T[i][j].visited = false; // Set the visited flag to false
+            T[i][j].dist = INT_MAX; // Set the distance to INT_MAX
+            T[i][j].path = 0; // Set the path to 0
         }
     }
 }

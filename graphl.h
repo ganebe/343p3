@@ -14,7 +14,7 @@ using namespace std;
 // Last Modified on 11/6/2023
 // Created by Vince Nguyen and Lok Yin Wong 
 // --------------------------------------------------------------------------------------------------------------------
-// This header file contains the class GraphM. The class has a function that reads a file to build a graph using adjacency
+// This header file contains the class GraphL. The class has a function that reads a file to build a graph using adjacency
 // list. Once the graph is builed, the user can use displayGraph and depth firstSearch to display the graph differently. 
 // --------------------------------------------------------------------------------------------------------------------
 // The class should be able to build and display the graph from a file that has correct format and vaild input
