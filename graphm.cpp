@@ -30,79 +30,107 @@ GraphM::GraphM(){
     }
 }
 
-void GraphM::buildGraph(ifstream &file)
+//------------------------- buildGraph ---------------------------------
+// Reads data from the input file to build the graph represented by this class.
+//-------------------------------------------------------------------------
+
+void GraphM::buildGraph(std::ifstream &file)
 {
-   file >> size;
-   char* name = new char[50];
-   file.getline(name, 50);
+   file >> size; // Read the number of nodes in the graph
+   char* name = new char[50]; // Allocate memory for a character array to hold node names
+
+   file.getline(name, 50); // Consume the newline character
 
    for (int i = 1; i <= size; i++)
    {
-        data[i].setData(file);
+        data[i].setData(file); // Read and set data for each node in the graph
    }
-    delete [] name;
+
+   delete [] name; // Deallocate the character array
+
    int fromEdge, toEdge, weight;
 
    while(file >> fromEdge >> toEdge >> weight)
    {
         if(fromEdge == 0)
         {
-            break;
+            break; // Exit the loop if the source node is 0
         }
 
-        C[fromEdge][toEdge] = weight;
+        C[fromEdge][toEdge] = weight; // Set the edge weight in the adjacency matrix
    }
 }
+
+
+
+//------------------------- insertEdge ---------------------------------
+// Inserts an edge between two nodes with the specified weight.
+//-------------------------------------------------------------------------
 
 bool GraphM::insertEdge(int fromEdge, int toEdge, int weight)
 {
     if (fromEdge < 1 || fromEdge > size)
     {
-        return false;
+        return false; // Invalid source node, cannot insert the edge
     }
 
     if (toEdge < 1 || toEdge > size)
     {
-        return false;
+        return false; // Invalid target node, cannot insert the edge
     }
 
     if (fromEdge == toEdge && weight != 0)
     {
-        return false;
+        return false; // Self-loop with non-zero weight is not allowed
     }
 
     if (weight < 0)
     {
-        return false;
+        return false; // Negative weight is not allowed
     }
 
-    C[fromEdge][toEdge] = weight;
-    return true;
+    C[fromEdge][toEdge] = weight; // Set the edge weight in the adjacency matrix
+    return true; // Edge successfully inserted
 }
+
+
+
+//------------------------- removeEdge ---------------------------------
+// Removes an edge between two nodes by setting the edge weight to INT_MAX.
+//-------------------------------------------------------------------------
 
 bool GraphM::removeEdge(int fromEdge, int toEdge)
 {
     if (fromEdge < 1 || fromEdge > size)
     {
-        return false;
+        return false; // Invalid source node, cannot remove the edge
     }
 
     if (toEdge < 1 || toEdge > size)
     {
-        return false;
+        return false; // Invalid target node, cannot remove the edge
     }
 
-    C[fromEdge][toEdge] = INT_MAX;
-    return true;
+    C[fromEdge][toEdge] = INT_MAX; // Set the edge weight to INT_MAX to remove the edge
+    return true; // Edge successfully removed
 }
+
+
+//------------------------- findShortestPath ---------------------------------
+// Finds the shortest path from each node to all other nodes in the graph using
+// Dijkstra's algorithm. The result is stored in the TableType T.
+//-------------------------------------------------------------------------
 
 void GraphM::findShortestPath()
 {
+    // Loop through each node as the source
     for (int source = 1; source <= size; source++)
     {
+        // Initialize the distance and visited status for the source node
         T[source][source].dist = 0;
         T[source][source].visited = true;
 
+        // Initialize distances and paths for direct edges from the source
         for (int node = 1; node <= size; node++)
         {
             if (C[source][node] != INT_MAX)
@@ -112,14 +140,16 @@ void GraphM::findShortestPath()
             }
         }
 
+        // Perform Dijkstra's algorithm to find the shortest paths
         for (int j = 1; j <= size - 1; j++)
         {
             int v = 0;
             int minDistance = INT_MAX;
 
+            // Find the unvisited node with the shortest distance
             for (int i = 1; i <= size; i++)
             {
-                if ((T[source][i].visited == false && T[source][i].dist < minDistance))
+                if (T[source][i].visited == false && T[source][i].dist < minDistance)
                 {
                     v = i;
                     minDistance = T[source][i].dist;
@@ -128,20 +158,21 @@ void GraphM::findShortestPath()
 
             if (v == 0)
             {
-                break;
+                break; // No unvisited nodes with finite distances
             }
 
             T[source][v].visited = true;
 
+            // Update distances and paths to neighboring nodes
             for(int w = 1; w <= size; w++)
             {
-                if(T[source][w].visited == false)
+                if (T[source][w].visited == false)
                 {
-                    if(C[v][w] == INT_MAX)
+                    if (C[v][w] == INT_MAX)
                     {
-                        continue;
+                        continue; // Skip unreachable nodes
                     }
-                    if(T[source][v].dist + C[v][w] < T[source][w].dist)
+                    if (T[source][v].dist + C[v][w] < T[source][w].dist)
                     {
                         T[source][w].dist = T[source][v].dist + C[v][w];
                         T[source][w].path = v;
