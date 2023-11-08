@@ -1,7 +1,7 @@
 #ifndef GRAPHM_H
 #define GRAPHM_H
 #include "nodedata.h"
-#include <limits>
+#include <limits.h>
 #include <iostream>
 #include <fstream>
 
@@ -15,8 +15,8 @@ void buildGraph(ifstream& file);
 bool insertEdge(int, int, int);
 bool removeEdge(int, int);
 void findShortestPath();
-void displayAll();
-void display(int, int);
+void displayAll() const;
+void display(const int, const int) const;
 private:
 
     struct TableType {
@@ -29,8 +29,8 @@ private:
     int C[MAXNODES][MAXNODES]; // Cost array, the adjacency matrix
     int size; // number of nodes in the graph
     TableType T[MAXNODES][MAXNODES]; // stores visited, distance, path
-    void printPathHelper(int, int);
-    void printValueHelper(int, int);
+    void printPathHelper(int, int) const;
+    void printValueHelper(int, int) const;
 };
 
 #endif

@@ -7,9 +7,9 @@ GraphM::GraphM()
     {
         for (int j = 1; j < MAXNODES; j++)
         {
-            C[i][j] = std::numeric_limits<int>::max();
+            C[i][j] = INT_MAX;
             T[i][j].visited = false;
-            T[i][j].dist = std::numeric_limits<int>::max();
+            T[i][j].dist = INT_MAX;
             T[i][j].path = 0;
         }
     }
@@ -25,7 +25,7 @@ void GraphM::buildGraph(ifstream &file)
    {
         data[i].setData(file);
    }
-
+    delete [] name;
    int fromEdge, toEdge, weight;
 
    while(file >> fromEdge >> toEdge >> weight)
@@ -77,7 +77,7 @@ bool GraphM::removeEdge(int fromEdge, int toEdge)
         return false;
     }
 
-    C[fromEdge][toEdge] = std::numeric_limits<int>::max();
+    C[fromEdge][toEdge] = INT_MAX;
     return true;
 }
 
@@ -90,7 +90,7 @@ void GraphM::findShortestPath()
 
         for (int node = 1; node <= size; node++)
         {
-            if (C[source][node] != std::numeric_limits<int>::max())
+            if (C[source][node] != INT_MAX)
             {
                 T[source][node].dist = C[source][node];
                 T[source][node].path = source;
@@ -99,8 +99,8 @@ void GraphM::findShortestPath()
 
         for (int j = 1; j <= size - 1; j++)
         {
-            int v = 1;
-            int minDistance = std::numeric_limits<int>::max();
+            int v = 0;
+            int minDistance = INT_MAX;
 
             for (int i = 1; i <= size; i++)
             {
@@ -111,13 +111,18 @@ void GraphM::findShortestPath()
                 }
             }
 
+            if (v == 0)
+            {
+                break;
+            }
+
             T[source][v].visited = true;
 
             for(int w = 1; w <= size; w++)
             {
                 if(T[source][w].visited == false)
                 {
-                    if(C[v][w] == std::numeric_limits<int>::max())
+                    if(C[v][w] == INT_MAX)
                     {
                         continue;
                     }
@@ -132,21 +137,26 @@ void GraphM::findShortestPath()
     }
 }
 
-void GraphM::displayAll()
+void GraphM::displayAll() const
 {
     cout << "Description            From node     To node     Dijkstra's Path" << endl;
     for(int i = 1 ; i <= size; i++){
         cout << data[i] << endl;
-        for(int j = 1; j <= size; j++){
-            if(i == j ){
+        for(int j = 1; j <= size; j++)
+        {
+            if(i == j)
+            {
                 
-            }else{
+            }
+            else
+            {
                 cout << "                                      ";
                 cout << i << "       " << j << "      ";
-                if(T[i][j].dist == std::numeric_limits<int>::max()){
+                if(T[i][j].dist == INT_MAX){
                     cout << "---" << endl;
                 }    
-                else{
+                else
+                {
                     cout << T[i][j].dist << "    "; 
                     //printValueHelper(i, j);
                     printPathHelper(i, j);
@@ -158,58 +168,68 @@ void GraphM::displayAll()
     }
 }
 
-void GraphM::display(int fromEdge, int toEdge)
+void GraphM::display(int fromEdge, int toEdge) const
 {
-    cout << "       " << fromEdge << "         " << toEdge;
+    if (fromEdge > size || fromEdge < 1 || toEdge > size || toEdge < 1) 
+    {
 
-    if (fromEdge < 1 || fromEdge > size || toEdge < 1 || toEdge > size)
+    cout << "       " << fromEdge << "         " << toEdge << "           " << "----" << endl;
+
+    } 
+    else 
     {
-        cout << "           " << "-----" << endl;
-    }
-    if (T[fromEdge][toEdge].dist != std::numeric_limits<int>::max())
+    cout << "       " << fromEdge <<  "         " << toEdge << "           ";
+
+    if (T[fromEdge][toEdge].dist != INT_MAX) 
     {
-        cout << "           " << T[fromEdge][toEdge].dist << "               ";
-        printPathHelper(fromEdge,toEdge);
-        printValueHelper(fromEdge,toEdge);
-        
-    }
-    else
+        cout << T[fromEdge][toEdge].dist << "               ";
+        printPathHelper(fromEdge, toEdge);
+        cout << endl;
+        printValueHelper(fromEdge, toEdge);
+    } 
+    else 
     {
-        cout << "           " << "-----" << endl;
+        cout << "----" << endl;
     }
+
+    }
+    cout << endl;
 }
 
-void GraphM::printPathHelper(int fromEdge, int toEdge)
+void GraphM::printPathHelper(int fromEdge, int toEdge) const
 {
-    if (T[fromEdge][toEdge].dist == std::numeric_limits<int>::max())
+    if (T[fromEdge][toEdge].dist == INT_MAX)
     {
         return;
     }
 
     if (fromEdge == toEdge)
     {
-        cout << toEdge;
+        cout << toEdge << " ";
         return;
     }
 
     int path = toEdge;
-    printPathHelper(fromEdge, toEdge = T[fromEdge][toEdge].path);
+    int previousEdge = T[fromEdge][toEdge].path;
+    printPathHelper(fromEdge, previousEdge);
     cout << path << " ";
 }
 
-void GraphM::printValueHelper(int fromEdge, int toEdge)
+void GraphM::printValueHelper(int fromEdge, int toEdge) const
 {
-    if (T[fromEdge][toEdge].dist == std::numeric_limits<int>::max())
+    if (T[fromEdge][toEdge].dist == INT_MAX)
     {
         return;
     }
 
     if (fromEdge == toEdge)
     {
-        cout << data[toEdge];
+        cout << data[toEdge] << endl;
         return;
     }
+
     int value = toEdge;
-    printValueHelper(fromEdge, toEdge = T[fromEdge][toEdge].path);
-    cout << data[value];
+    int previousEdge = T[fromEdge][toEdge].path;
+    printValueHelper(fromEdge, previousEdge);
+    cout << data[value] << endl;
 }
