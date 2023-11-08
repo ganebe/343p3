@@ -61,6 +61,7 @@
     "string": "cpp",
     "iostream": "cpp",
     "limits": "cpp",
-    "ostream": "cpp"
+    "ostream": "cpp",
+    "fstream": "cpp"
   }
 }
