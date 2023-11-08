@@ -183,99 +183,123 @@ void GraphM::findShortestPath()
     }
 }
 
+//------------------------- displayAll ---------------------------------
+// Displays information about all nodes in the graph and their shortest paths
+// as computed by Dijkstra's algorithm.
+//-------------------------------------------------------------------------
+
 void GraphM::displayAll() const
 {
-    cout << "Description            From node     To node     Dijkstra's Path" << endl;
-    for(int i = 1 ; i <= size; i++){
-        cout << data[i] << endl;
-        for(int j = 1; j <= size; j++)
+    cout << "Description            From node     To node     Dijkstra's       Path" << endl;
+
+    // Iterate through all nodes in the graph
+    for (int i = 1; i <= size; i++)
+    {
+        cout << data[i] << endl;    //print the node name
+
+        for (int j = 1; j <= size; j++)
         {
-            if(i == j)
+            if (i == j)
             {
-                
+                // Skip the diagonal (same node to itself)
             }
             else
             {
-                cout << "                                      ";
-                cout << i << "       " << j << "      ";
-                if(T[i][j].dist == INT_MAX){
-                    cout << "---" << endl;
-                }    
+                cout << "                           ";
+                cout << i << "            " << j << "           "; //print from node and to node
+                
+                if (T[i][j].dist == INT_MAX)
+                {
+                    cout << "---" << endl; // No path exists between nodes
+                }
                 else
                 {
-                    cout << T[i][j].dist << "    "; 
-                    //printValueHelper(i, j);
-                    printPathHelper(i, j);
+                    cout << T[i][j].dist << "              "; // print shortest distance
+                    printPathHelper(i, j); // Print the shortest path
                     cout << endl;
                 }
             }
         }
-
     }
 }
+
+//------------------------- display ---------------------------------
+// Displays information about the shortest path from one node to another
+// in the graph, as computed by Dijkstra's algorithm.
+//-------------------------------------------------------------------------
 
 void GraphM::display(int fromEdge, int toEdge) const
 {
     if (fromEdge > size || fromEdge < 1 || toEdge > size || toEdge < 1) 
     {
-
-    cout << "       " << fromEdge << "         " << toEdge << "           " << "----" << endl;
-
+        // Nodes are out of range, or one of them doesn't exist
+        cout << "       " << fromEdge << "         " << toEdge << "           " << "----" << endl;
     } 
     else 
     {
-    cout << "       " << fromEdge <<  "         " << toEdge << "           ";
+        cout << "       " << fromEdge <<  "         " << toEdge << "           ";
 
-    if (T[fromEdge][toEdge].dist != INT_MAX) 
-    {
-        cout << T[fromEdge][toEdge].dist << "               ";
-        printPathHelper(fromEdge, toEdge);
-        cout << endl;
-        printValueHelper(fromEdge, toEdge);
-    } 
-    else 
-    {
-        cout << "----" << endl;
-    }
-
+        if (T[fromEdge][toEdge].dist != INT_MAX) 
+        {
+            // Shortest path exists between the nodes
+            cout << T[fromEdge][toEdge].dist << "               ";
+            printPathHelper(fromEdge, toEdge); // Print the shortest path
+            cout << endl;
+            printValueHelper(fromEdge, toEdge); // Print the path with node name
+        } 
+        else 
+        {
+            // No path exists between the nodes
+            cout << "----" << endl;
+        }
     }
     cout << endl;
 }
+
+//------------------------- printPathHelper ---------------------------------
+// Hepler that Recursively prints the path from one node to another, as computed by
+// Dijkstra's algorithm, using the TableType T.
+//-------------------------------------------------------------------------
 
 void GraphM::printPathHelper(int fromEdge, int toEdge) const
 {
     if (T[fromEdge][toEdge].dist == INT_MAX)
     {
-        return;
+        return; // No path exists between the nodes
     }
 
     if (fromEdge == toEdge)
     {
-        cout << toEdge << " ";
+        cout << toEdge << " "; // Print the node itself when source and target are the same
         return;
     }
 
     int path = toEdge;
     int previousEdge = T[fromEdge][toEdge].path;
-    printPathHelper(fromEdge, previousEdge);
+    printPathHelper(fromEdge, previousEdge); // Recursively print the path
     cout << path << " ";
 }
+
+//------------------------- printValueHelper ---------------------------------
+// Helper that Recursively prints the node name along the path from one node to another,
+// as computed by Dijkstra's algorithm, using the TableType T.
+//-------------------------------------------------------------------------
 
 void GraphM::printValueHelper(int fromEdge, int toEdge) const
 {
     if (T[fromEdge][toEdge].dist == INT_MAX)
     {
-        return;
+        return; // No path exists between the nodes
     }
 
     if (fromEdge == toEdge)
     {
-        cout << data[toEdge] << endl;
+        cout << data[toEdge] << endl; // Print the value of the target node when source and target are the same
         return;
     }
 
     int value = toEdge;
     int previousEdge = T[fromEdge][toEdge].path;
-    printValueHelper(fromEdge, previousEdge);
-    cout << data[value] << endl;
+    printValueHelper(fromEdge, previousEdge); // Recursively print the values along the path
+    cout << data[value] << endl << endl;    // prints the node name
 }
