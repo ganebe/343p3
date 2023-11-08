@@ -216,7 +216,7 @@ void GraphM::displayAll() const
                 {
                     cout << T[i][j].dist << "              "; // print shortest distance
                     printPathHelper(i, j); // Print the shortest path
-                    cout << endl;
+                    cout << endl << endl << endl;
                 }
             }
         }
@@ -244,7 +244,7 @@ void GraphM::display(int fromEdge, int toEdge) const
             // Shortest path exists between the nodes
             cout << T[fromEdge][toEdge].dist << "               ";
             printPathHelper(fromEdge, toEdge); // Print the shortest path
-            cout << endl;
+            cout << endl << endl;
             printValueHelper(fromEdge, toEdge); // Print the path with node name
         } 
         else 
@@ -294,7 +294,7 @@ void GraphM::printValueHelper(int fromEdge, int toEdge) const
 
     if (fromEdge == toEdge)
     {
-        cout << data[toEdge] << endl; // Print the value of the target node when source and target are the same
+        cout << data[toEdge] << endl << endl; // Print the value of the target node when source and target are the same
         return;
     }
 
