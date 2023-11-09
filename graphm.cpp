@@ -216,8 +216,9 @@ void GraphM::displayAll() const
                 {
                     cout << T[i][j].dist << "              "; // print shortest distance
                     printPathHelper(i, j); // Print the shortest path
-                    cout << endl << endl << endl;
+                    cout << endl;
                 }
+                cout << endl;
             }
         }
     }
